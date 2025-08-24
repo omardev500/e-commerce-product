@@ -1,16 +1,37 @@
 <script setup>
-  import { ref } from "vue";
+  import { ref, onMounted, onUnmounted } from "vue";
   import Header from "./components/Header.vue";
   import SideNav from "./components/SideNav.vue";
+  import { useAppStore } from "./stores/store.js";
+  const appStorage = useAppStore()
   
-  const mobileView = ref(true);
-  const isSideNavOpen = ref(false);
+  const screenWidth = ref(window.innerWidth)
+  
+  function updateDesign() {
+    if (screenWidth.value <= 580) {
+      appStorage.setSmallHeader = true
+    } else {
+      appStorage.setSmallHeader = false
+    }
+  }
+  
+  onMounted(() => {
+    window.addEventListener("resize", () => { 
+      screenWidth.value = window.innerWidth
+      updateDesign();
+    })
+  })
+  
+  onUnmounted(() => {
+    window.removeEventListener("resize", () => screenWidth.value = window.innerWidth)
+  })
+  
   const productImages = ref([]);
 </script>
 
 <template>
-  <Header :is-mobile="mobileView" />
-  <SideNav :is-open="isSideNavOpen" />
+  <Header />
+  <SideNav />
   <main class="pt-16">
     <section class="relative h-70">
       <button class="absolute z-2 left-2 top-1/2 -translate-y-1/2 text-black active:bg-orange-100 bg-white rounded-full p-3"><i class="fa-solid fa-angle-left"></i></button>
