@@ -1,6 +1,7 @@
 <script setup>
   import { ref } from "vue";
   import Header from "./components/Header.vue";
+  import SideNav from "./components/SideNav.vue";
   
   const mobileView = ref(true);
   const isSideNavOpen = ref(false);
@@ -9,6 +10,7 @@
 
 <template>
   <Header :is-mobile="mobileView" />
+  <SideNav :is-open="isSideNavOpen" />
   <main class="pt-16">
     <section class="relative h-70">
       <button class="absolute z-2 left-2 top-1/2 -translate-y-1/2 text-black active:bg-orange-100 bg-white rounded-full p-3"><i class="fa-solid fa-angle-left"></i></button>
